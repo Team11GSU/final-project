@@ -26,6 +26,7 @@ app = Flask(__name__)
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 # Point SQLAlchemy to Heroku database, changes url to correct format
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + db_path
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL").replace(
     "postgres://", "postgresql://"
 )
@@ -45,9 +46,9 @@ login_manager.login_view = "routes.index"
 
 @login_manager.user_loader
 def load_user(user_id):
-#     "loading user for flask-login"
-#     # pylint: disable=no-member
-#     return db.session.get(User, user_id)
+    #     "loading user for flask-login"
+    #     # pylint: disable=no-member
+    #     return db.session.get(User, user_id)
     return User.query.get(int(user_id))
 
 
